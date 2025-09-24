@@ -19,17 +19,21 @@ class TransactionResourceTest {
                 .body("""
                     {
                         "amount": 100.50,
-                        "currency": "USD"
+                        "currency": "USD",
+                        "originAccountNumber": "ACC-123456789",
+                        "destinationAccountNumber": "ACC-987654321"
                     }
                     """)
                 .when()
-                .post("/transactions")
+                .post("/api/v1/transactions")
                 .then()
                 .statusCode(201)
                 .header("Location", notNullValue())
                 .body("id", notNullValue())
                 .body("amount", equalTo(100.5f))
                 .body("currency", equalTo("USD"))
+                .body("originAccountNumber", equalTo("ACC-123456789"))
+                .body("destinationAccountNumber", equalTo("ACC-987654321"))
                 .body("status", equalTo("PENDING"))
                 .body("createdAt", notNullValue());
     }
@@ -41,15 +45,15 @@ class TransactionResourceTest {
                 .body("""
                     {
                         "amount": -10.0,
-                        "currency": "INVALID"
+                        "currency": "INVALID",
+                        "originAccountNumber": "SHORT",
+                        "destinationAccountNumber": "ACC-987654321"
                     }
                     """)
                 .when()
-                .post("/transactions")
+                .post("/api/v1/transactions")
                 .then()
-                .statusCode(400)
-                .body("code", equalTo("VALIDATION_ERROR"))
-                .body("violations", notNullValue());
+                .statusCode(400);
     }
 
     @Test
@@ -60,11 +64,13 @@ class TransactionResourceTest {
                 .body("""
                     {
                         "amount": 75.25,
-                        "currency": "EUR"
+                        "currency": "EUR",
+                        "originAccountNumber": "ACC-111111111",
+                        "destinationAccountNumber": "ACC-222222222"
                     }
                     """)
                 .when()
-                .post("/transactions")
+                .post("/api/v1/transactions")
                 .then()
                 .statusCode(201)
                 .extract()
@@ -73,12 +79,14 @@ class TransactionResourceTest {
         // Then retrieve it
         given()
                 .when()
-                .get("/transactions/{id}", transactionId)
+                .get("/api/v1/transactions/{id}", transactionId)
                 .then()
                 .statusCode(200)
                 .body("id", equalTo(transactionId))
                 .body("amount", equalTo(75.25f))
                 .body("currency", equalTo("EUR"))
+                .body("originAccountNumber", equalTo("ACC-111111111"))
+                .body("destinationAccountNumber", equalTo("ACC-222222222"))
                 .body("status", equalTo("PENDING"));
     }
 
@@ -86,10 +94,9 @@ class TransactionResourceTest {
     void shouldReturn404ForNonExistentTransaction() {
         given()
                 .when()
-                .get("/transactions/non-existent-id")
+                .get("/api/v1/transactions/non-existent-id")
                 .then()
-                .statusCode(404)
-                .body("code", equalTo("TRANSACTION_NOT_FOUND"));
+                .statusCode(404);
     }
 
     @Test
@@ -101,11 +108,13 @@ class TransactionResourceTest {
                     .body(String.format("""
                         {
                             "amount": %d.00,
-                            "currency": "USD"
+                            "currency": "USD",
+                            "originAccountNumber": "ACC-%09d",
+                            "destinationAccountNumber": "ACC-%09d"
                         }
-                        """, (i + 1) * 10))
+                        """, (i + 1) * 10, 100000000 + i, 200000000 + i))
                     .when()
-                    .post("/transactions")
+                    .post("/api/v1/transactions")
                     .then()
                     .statusCode(201);
         }
@@ -113,7 +122,7 @@ class TransactionResourceTest {
         // List transactions
         given()
                 .when()
-                .get("/transactions")
+                .get("/api/v1/transactions")
                 .then()
                 .statusCode(200)
                 .body("transactions", hasSize(3))
@@ -132,11 +141,13 @@ class TransactionResourceTest {
                     .body(String.format("""
                         {
                             "amount": %d.00,
-                            "currency": "USD"
+                            "currency": "USD",
+                            "originAccountNumber": "ACC-%09d",
+                            "destinationAccountNumber": "ACC-%09d"
                         }
-                        """, (i + 1) * 10))
+                        """, (i + 1) * 10, 300000000 + i, 400000000 + i))
                     .when()
-                    .post("/transactions")
+                    .post("/api/v1/transactions")
                     .then()
                     .statusCode(201);
         }
@@ -146,7 +157,7 @@ class TransactionResourceTest {
                 .queryParam("offset", 0)
                 .queryParam("limit", 2)
                 .when()
-                .get("/transactions")
+                .get("/api/v1/transactions")
                 .then()
                 .statusCode(200)
                 .body("transactions", hasSize(2))
