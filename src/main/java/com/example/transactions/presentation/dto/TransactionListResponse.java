@@ -12,20 +12,20 @@ import java.util.List;
  * @param hasNext whether there are more transactions available
  */
 public record TransactionListResponse(
-        List<TransactionResponse> transactions, long total, int offset, int limit, boolean hasNext) {
+    List<TransactionResponse> transactions, long total, int offset, int limit, boolean hasNext) {
 
-    /**
-     * Creates a TransactionListResponse with pagination metadata.
-     *
-     * @param transactions the list of transaction responses
-     * @param total the total count of transactions
-     * @param offset the current offset
-     * @param limit the current limit
-     * @return the paginated response
-     */
-    public static TransactionListResponse of(
-            List<TransactionResponse> transactions, long total, int offset, int limit) {
-        boolean hasNext = (offset + limit) < total;
-        return new TransactionListResponse(transactions, total, offset, limit, hasNext);
-    }
+  /**
+   * Creates a TransactionListResponse with pagination metadata.
+   *
+   * @param transactions the list of transaction responses
+   * @param total the total count of transactions
+   * @param offset the current offset
+   * @param limit the current limit
+   * @return the paginated response
+   */
+  public static TransactionListResponse of(
+      List<TransactionResponse> transactions, long total, int offset, int limit) {
+    boolean hasNext = (offset + limit) < total;
+    return new TransactionListResponse(transactions, total, offset, limit, hasNext);
+  }
 }

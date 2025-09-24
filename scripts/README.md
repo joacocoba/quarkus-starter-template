@@ -1,48 +1,56 @@
-# Scripts
+# Scripts Directory
 
 This directory contains utility scripts for the Quarkus Starter Template project.
 
 ## Available Scripts
 
 ### `test-api.sh`
-Comprehensive API testing script that validates all transaction endpoints:
-- Health check validation
-- POST /api/v1/transactions (create transaction)
-- GET /api/v1/transactions/{id} (get specific transaction)
-- GET /api/v1/transactions (list transactions)
+**Purpose**: Manual API testing script to validate all endpoints
 
-**Usage:**
+**Usage**:
 ```bash
+# Start the application first
+./mvnw quarkus:dev
+
+# In another terminal, run the API tests
 ./scripts/test-api.sh
 ```
 
-**Prerequisites:** Application must be running on port 8081
+**What it tests**:
+- Health check endpoint
+- POST /api/v1/transactions (create)
+- GET /api/v1/transactions/{id} (get by ID)  
+- GET /api/v1/transactions (list all)
 
-### `test-start.sh`
-Application startup validation script that:
-- Builds the application
-- Runs unit tests
-- Tests dev mode startup
-- Validates health endpoints
+**Requirements**: 
+- Application running on localhost:8081
+- `curl` and `jq` installed (jq is optional, for pretty JSON formatting)
 
-**Usage:**
+### `git-hooks.sh`
+**Purpose**: Manage Git pre-commit hooks for code quality
+
+**Usage**:
 ```bash
-./scripts/test-start.sh
+# Check hook status
+./scripts/git-hooks.sh status
+
+# Test the pre-commit hook manually
+./scripts/git-hooks.sh test
+
+# Temporarily disable the hook
+./scripts/git-hooks.sh disable
+
+# Re-enable the hook
+./scripts/git-hooks.sh enable
 ```
 
-**Prerequisites:** Maven wrapper (./mvnw) must be available
+**Pre-commit checks**:
+- ✅ Compilation check (`./mvnw compile`)
+- ✅ Test execution (`./mvnw test`)
+- ✅ Code formatting (`./mvnw spotless:check`)
+- ✅ Common issues detection (TODOs, debug statements, large files)
 
-## Running Scripts
-
-All scripts should be executed from the project root directory:
-
-```bash
-# Make scripts executable (first time only)
-chmod +x scripts/*.sh
-
-# Run API tests
-./scripts/test-api.sh
-
-# Test application startup
-./scripts/test-start.sh
-```
+## Notes
+- All debug and temporary scripts have been removed
+- Only essential, reusable scripts are kept
+- Use Maven commands (`./mvnw test`, `./mvnw compile`) for build operations

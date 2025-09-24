@@ -6,18 +6,12 @@ package com.example.transactions.domain.model;
  * <p>Transaction lifecycle: PENDING → COMPLETED or FAILED
  */
 public enum TransactionStatus {
-    /**
-     * Transaction has been created but not yet processed.
-     */
-    PENDING,
+  /** Transaction has been created but not yet processed. */
+  PENDING,
 
-    /**
-     * Transaction has been successfully completed.
-     */
-    COMPLETED,
+  /** Transaction has been successfully completed. */
+  COMPLETED,
 
-    /**
-     * Transaction processing has failed.
-     */
-    FAILED
+  /** Transaction processing has failed. */
+  FAILED
 }

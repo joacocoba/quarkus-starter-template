@@ -8,10 +8,10 @@ package com.example.transactions.domain.ports;
  */
 public interface IdGeneratorPort {
 
-    /**
-     * Generates a new unique identifier.
-     *
-     * @return a unique ID string
-     */
-    String generateId();
+  /**
+   * Generates a new unique identifier.
+   *
+   * @return a unique ID string
+   */
+  String generateId();
 }
