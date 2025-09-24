@@ -1,209 +1,212 @@
-# Architecture Overview
+````markdown
+# Arquitectura del Sistema
 
-## System Design
+## Diseño del Sistema
 
-The Transactions Service is built using **Hexagonal Architecture** (also known as Ports & Adapters), ensuring clean separation of concerns and testability.
+El Servicio de Transacciones está construido usando **Arquitectura Hexagonal** (también conocida como Puertos y Adaptadores), asegurando una separación limpia de responsabilidades y facilidad de pruebas.
 
-## Architecture Layers
+## Capas de Arquitectura
 
-### 1. Domain Layer (`domain/`)
-**Pure business logic, framework-independent**
+### 1. Capa de Dominio (`domain/`)
+**Lógica de negocio pura, independiente del framework**
 
-- **Models**: `Transaction`, `TransactionStatus`
-- **Ports**: `TransactionRepositoryPort`, `IdGeneratorPort`
-- **Responsibility**: Encapsulates business rules and domain logic
+- **Modelos**: `Transaction`, `TransactionStatus`
+- **Puertos**: `TransactionRepositoryPort`, `IdGeneratorPort`
+- **Responsabilidad**: Encapsula las reglas de negocio y lógica del dominio
 
-**Key Principles**:
-- No framework dependencies
-- Contains all business rules
-- Immutable entities where possible
-- Rich domain model with behavior
+**Principios Clave**:
+- Sin dependencias de frameworks
+- Contiene todas las reglas de negocio
+- Entidades inmutables cuando sea posible
+- Modelo de dominio rico con comportamiento
 
-### 2. Application Layer (`application/`)
-**Use cases and orchestration**
+### 2. Capa de Aplicación (`application/`)
+**Casos de uso y orquestación**
 
-- **Use Cases**: `CreateTransactionUseCase`, `GetTransactionUseCase`, `ListTransactionsUseCase`
+- **Casos de Uso**: `CreateTransactionUseCase`, `GetTransactionUseCase`, `ListTransactionsUseCase`
 - **DTOs**: `TransactionQuery`
-- **Responsibility**: Orchestrates domain objects to fulfill use cases
+- **Responsabilidad**: Orquesta objetos del dominio para cumplir casos de uso
 
-**Key Principles**:
-- Thin orchestration layer
-- Coordinates between domain and infrastructure
-- Stateless operations
-- Transaction boundaries
+**Principios Clave**:
+- Capa de orquestación delgada
+- Coordina entre dominio e infraestructura
+- Operaciones sin estado
+- Límites de transacción
 
-### 3. Infrastructure Layer (`infrastructure/`)
-**Technical implementations**
+### 3. Capa de Infraestructura (`infrastructure/`)
+**Implementaciones técnicas**
 
-- **Repositories**: `InMemoryTransactionRepositoryAdapter`, `OracleTransactionRepositoryAdapter`
-- **Services**: `UuidGeneratorAdapter`
-- **Responsibility**: Implements ports with actual technology
+- **Repositorios**: `InMemoryTransactionRepositoryAdapter`, `OracleTransactionRepositoryAdapter`
+- **Servicios**: `UuidGeneratorAdapter`
+- **Responsabilidad**: Implementa puertos con tecnología específica
 
-**Key Principles**:
-- Implements domain ports
-- Contains all framework-specific code
-- Configurable implementations
-- Technology isolation
+**Principios Clave**:
+- Implementa puertos del dominio
+- Contiene todo el código específico de frameworks
+- Implementaciones configurables
+- Aislamiento tecnológico
 
-### 4. Presentation Layer (`presentation/`)
-**API controllers and DTOs**
+### 4. Capa de Presentación (`presentation/`)
+**Controladores de API y DTOs**
 
-- **REST Resources**: `TransactionResource`
-- **DTOs**: Request/Response objects
-- **Exception Handling**: `GlobalExceptionMapper`
-- **Responsibility**: Exposes use cases via REST API
+- **Recursos REST**: `TransactionResource`
+- **DTOs**: Objetos de solicitud/respuesta
+- **Manejo de Excepciones**: `GlobalExceptionMapper`
+- **Responsabilidad**: Expone casos de uso vía API REST
 
-**Key Principles**:
-- Thin controllers
-- Input validation
-- Proper HTTP semantics
-- API versioning ready
+**Principios Clave**:
+- Controladores delgados
+- Validación de entrada
+- Semántica HTTP apropiada
+- Preparado para versionado de API
 
-### 5. Shared Layer (`shared/`)
-**Common utilities and types**
+### 5. Capa Compartida (`shared/`)
+**Utilidades comunes y tipos**
 
-- **Errors**: Domain exceptions
-- **Result Types**: Functional result handling
-- **Responsibility**: Reusable components across layers
+- **Errores**: Excepciones del dominio
+- **Tipos de Resultado**: Manejo funcional de resultados
+- **Responsabilidad**: Componentes reutilizables entre capas
 
-## Data Flow
+## Flujo de Datos
 
 ```
-HTTP Request → Presentation → Application → Domain ← Infrastructure
-     ↓              ↓            ↓          ↓         ↓
-  REST API → Use Cases → Domain Logic → Ports ← Adapters
+Petición HTTP → Presentación → Aplicación → Dominio ← Infraestructura
+     ↓               ↓            ↓          ↓         ↓
+  API REST → Casos de Uso → Lógica Dominio → Puertos ← Adaptadores
 ```
 
-1. **Inbound**: HTTP → Controller → Use Case → Domain
-2. **Outbound**: Domain → Port → Infrastructure Adapter
+1. **Entrada**: HTTP → Controlador → Caso de Uso → Dominio
+2. **Salida**: Dominio → Puerto → Adaptador de Infraestructura
 
-## Technology Stack
+## Stack Tecnológico
 
-### Core Framework
-- **Quarkus 3.20**: Kubernetes-native Java framework
-- **Java 21**: Latest LTS with modern language features
-- **Maven**: Build automation and dependency management
+### Framework Principal
+- **Quarkus 3.15.1**: Framework Java nativo para Kubernetes
+- **Java 21**: Última versión LTS con características modernas del lenguaje
+- **Maven**: Automatización de construcción y gestión de dependencias
 
-### Quality & Standards
-- **Spotless**: Code formatting (Google Java Format)
-- **Checkstyle**: Static code analysis
-- **Maven Enforcer**: Dependency and version compliance
-- **EditorConfig**: Consistent coding styles
+### Calidad y Estándares
+- **Spotless**: Formateo de código (Google Java Format)
+- **Checkstyle**: Análisis estático de código
+- **Maven Enforcer**: Cumplimiento de dependencias y versiones
+- **EditorConfig**: Estilos de codificación consistentes
 
-### Testing
-- **JUnit 5**: Unit testing framework
-- **REST Assured**: API testing
-- **AssertJ**: Fluent assertions
-- **Mockito**: Mocking framework
+### Pruebas
+- **JUnit 5**: Framework de pruebas unitarias
+- **REST Assured**: Pruebas de API
+- **AssertJ**: Aserciones fluidas
+- **Mockito**: Framework de mocking
 
-### Observability
-- **Micrometer**: Metrics collection
-- **SmallRye Health**: Health checks
-- **Structured Logging**: JSON logging support
+### Observabilidad
+- **Micrometer**: Recolección de métricas
+- **SmallRye Health**: Verificaciones de salud
+- **Structured Logging**: Soporte para logging JSON
 
-### API Documentation
-- **OpenAPI 3**: API specification
-- **Swagger UI**: Interactive documentation
+### Documentación de API
+- **OpenAPI 3**: Especificación de API
+- **Swagger UI**: Documentación interactiva
 
-## Design Patterns
+## Patrones de Diseño
 
-### 1. Hexagonal Architecture
-- **Ports**: Define contracts (interfaces)
-- **Adapters**: Implement contracts with specific technologies
-- **Domain**: Contains core business logic
+### 1. Arquitectura Hexagonal
+- **Puertos**: Definen contratos (interfaces)
+- **Adaptadores**: Implementan contratos con tecnologías específicas
+- **Dominio**: Contiene la lógica de negocio central
 
-### 2. Dependency Injection
-- **Constructor Injection**: Preferred for required dependencies
-- **CDI**: Context and Dependency Injection for wiring
+### 2. Inyección de Dependencias
+- **Inyección por Constructor**: Preferida para dependencias requeridas
+- **CDI**: Context and Dependency Injection para conectar componentes
 
-### 3. Repository Pattern
-- **Abstract Data Access**: Domain doesn't know about persistence details
-- **Multiple Implementations**: In-memory, Oracle, etc.
+### 3. Patrón Repository
+- **Acceso Abstracto a Datos**: El dominio no conoce detalles de persistencia
+- **Múltiples Implementaciones**: En memoria, Oracle, etc.
 
-### 4. Use Case Pattern
-- **Single Responsibility**: Each use case handles one business operation
-- **Orchestration**: Coordinates domain objects and infrastructure
+### 4. Patrón Caso de Uso
+- **Responsabilidad Única**: Cada caso de uso maneja una operación de negocio
+- **Orquestación**: Coordina objetos de dominio e infraestructura
 
-### 5. DTO Pattern
-- **Data Transfer**: Separate DTOs for API and internal objects
-- **Validation**: Input validation at boundaries
+### 5. Patrón DTO
+- **Transferencia de Datos**: DTOs separados para API y objetos internos
+- **Validación**: Validación de entrada en los límites
 
-## Configuration Management
+## Gestión de Configuración
 
-### Profiles
-- **dev**: Development with in-memory storage
-- **test**: Testing configuration
-- **prod**: Production with Oracle database
+### Perfiles
+- **dev**: Desarrollo con almacenamiento en memoria
+- **test**: Configuración de pruebas
+- **prod**: Producción con base de datos Oracle
 
-### Property Sources
-- **application.properties**: Default configuration
-- **application-{profile}.properties**: Profile-specific overrides
-- **Environment Variables**: Runtime configuration
+### Fuentes de Propiedades
+- **application.properties**: Configuración por defecto
+- **application-{profile}.properties**: Sobrescrituras específicas por perfil
+- **Variables de Entorno**: Configuración en tiempo de ejecución
 
-## Security Considerations
+## Consideraciones de Seguridad
 
-### Current Implementation
-- **Input Validation**: Jakarta Validation on all inputs
-- **Error Handling**: No sensitive information in error responses
-- **Non-root Execution**: Docker containers run as non-root user
+### Implementación Actual
+- **Validación de Entrada**: Jakarta Validation en todas las entradas
+- **Manejo de Errores**: Sin información sensible en respuestas de error
+- **Ejecución Sin Root**: Contenedores Docker ejecutan como usuario sin root
 
-### Future Enhancements
-- JWT authentication
-- Role-based authorization
-- Rate limiting
-- Request/response logging
+### Mejoras Futuras
+- Autenticación JWT
+- Autorización basada en roles
+- Limitación de velocidad
+- Logging de solicitudes/respuestas
 
-## Scalability & Performance
+## Escalabilidad y Rendimiento
 
-### Current Features
-- **Stateless Design**: No server-side session state
-- **Connection Pooling**: Database connection management
-- **Pagination**: Prevents large result sets
+### Características Actuales
+- **Diseño Sin Estado**: Sin estado de sesión en el servidor
+- **Pool de Conexiones**: Gestión de conexiones a base de datos
+- **Paginación**: Previene conjuntos de resultados grandes
 
-### Future Considerations
-- Caching layer (Redis)
-- Event-driven architecture
-- Read replicas for queries
-- Circuit breaker pattern
+### Consideraciones Futuras
+- Capa de caché (Redis)
+- Arquitectura dirigida por eventos
+- Réplicas de lectura para consultas
+- Patrón circuit breaker
 
-## Monitoring & Observability
+## Monitoreo y Observabilidad
 
-### Health Checks
-- **Readiness**: `/q/health/ready` - Ready to serve traffic
-- **Liveness**: `/q/health/live` - Application is running
+### Verificaciones de Salud
+- **Preparación**: `/q/health/ready` - Listo para servir tráfico
+- **Vitalidad**: `/q/health/live` - Aplicación en ejecución
 
-### Metrics
-- **Micrometer**: JVM and custom metrics
-- **Prometheus**: Metrics collection endpoint
+### Métricas
+- **Micrometer**: Métricas de JVM y personalizadas
+- **Prometheus**: Endpoint de recolección de métricas
 
 ### Logging
-- **Structured Logs**: JSON format for log aggregation
-- **Correlation IDs**: Request tracing
-- **Log Levels**: Configurable per package
+- **Logs Estructurados**: Formato JSON para agregación de logs
+- **IDs de Correlación**: Rastreo de solicitudes
+- **Niveles de Log**: Configurables por paquete
 
-## Testing Strategy
+## Estrategia de Pruebas
 
-### Unit Tests
-- **Domain Layer**: Pure unit tests, no mocks
-- **Application Layer**: Test use cases with mocked ports
-- **Infrastructure Layer**: Test adapters with real implementations
+### Pruebas Unitarias
+- **Capa de Dominio**: Pruebas unitarias puras, sin mocks
+- **Capa de Aplicación**: Prueba casos de uso con puertos simulados
+- **Capa de Infraestructura**: Prueba adaptadores con implementaciones reales
 
-### Integration Tests
-- **API Tests**: Full HTTP request/response cycle
-- **Repository Tests**: Database integration
-- **Container Tests**: Docker image testing
+### Pruebas de Integración
+- **Pruebas de API**: Ciclo completo de solicitud/respuesta HTTP
+- **Pruebas de Repositorio**: Integración con base de datos
+- **Pruebas de Contenedor**: Pruebas de imagen Docker
 
-### Test Environments
-- **In-memory**: Fast tests with in-memory implementations
-- **Testcontainers**: Integration tests with real databases
-- **CI/CD**: Automated testing pipeline
+### Entornos de Prueba
+- **En Memoria**: Pruebas rápidas con implementaciones en memoria
+- **Testcontainers**: Pruebas de integración con bases de datos reales
+- **CI/CD**: Pipeline automatizado de pruebas
 
-## Evolution Path
+## Ruta de Evolución
 
-The architecture supports incremental evolution:
+La arquitectura soporta evolución incremental:
 
-1. **Phase 1**: Basic CRUD operations (current)
-2. **Phase 2**: Oracle database integration
-3. **Phase 3**: Event-driven features (outbox pattern)
-4. **Phase 4**: Advanced features (caching, security)
-5. **Phase 5**: Microservices patterns (service mesh, distributed tracing)
+1. **Fase 1**: Operaciones CRUD básicas (actual)
+2. **Fase 2**: Integración con base de datos Oracle
+3. **Fase 3**: Características dirigidas por eventos (patrón outbox)
+4. **Fase 4**: Características avanzadas (caché, seguridad)
+5. **Fase 5**: Patrones de microservicios (service mesh, rastreo distribuido)
+
+````
