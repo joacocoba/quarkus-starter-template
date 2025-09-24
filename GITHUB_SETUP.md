@@ -20,14 +20,14 @@ We've successfully:
 
 ### Step 2: Add Remote and Push
 ```bash
-# Add your GitHub repository as remote
-git remote add origin https://github.com/YOUR_USERNAME/quarkus-starter-template.git
+# Add your GitHub repository as remote (COMPLETED ✅)
+git remote add origin https://github.com/joacocoba/quarkus-starter-template.git
 
-# Push main branch
+# Push main branch (COMPLETED ✅)
 git branch -M main
 git push -u origin main
 
-# Push the release tag
+# Push the release tag (COMPLETED ✅)
 git push origin v1.0.0
 ```
 
