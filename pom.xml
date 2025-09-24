@@ -12,28 +12,27 @@
     <name>Quarkus Starter Template</name>
     <description>Production-ready Quarkus starter template with hexagonal architecture, transaction management, and comprehensive API features</description>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <properties>
+        <compiler-plugin.version>3.13.0</compiler-plugin.version>
+        <enforcer-plugin.version>3.5.0</enforcer-plugin.version>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <!-- Quarkus Platform BOM -->
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.20.0</quarkus.platform.version>
-
-        <!-- Plugin versions -->
+        <quarkus.platform.version>3.15.1</quarkus.platform.version>
+        <skipITs>true</skipITs>
+        <surefire-plugin.version>3.5.2</surefire-plugin.version>
+        <!-- Code quality tools -->
+        <spotless.version>2.44.0</spotless.version>
+        <checkstyle.version>10.20.1</checkstyle.version>
+        <!-- Plugin versions to fix Maven errors -->
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.5.2</maven-failsafe-plugin.version>
-        <spotless-maven-plugin.version>2.43.0</spotless-maven-plugin.version>
-        <maven-checkstyle-plugin.version>3.4.0</maven-checkstyle-plugin.version>
+        <spotless-maven-plugin.version>2.44.0</spotless-maven-plugin.version>
+        <maven-checkstyle-plugin.version>3.5.0</maven-checkstyle-plugin.version>
         <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
-        <checkstyle.version>10.12.4</checkstyle.version>
-
-        <!-- Skip tests by default for package phase in Docker -->
-        <skipTests>false</skipTests>
     </properties>
 
     <dependencyManagement>
@@ -58,6 +57,7 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest</artifactId>
         </dependency>
+                <!-- REST endpoints -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-jackson</artifactId>

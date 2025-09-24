@@ -53,9 +53,8 @@ class TransactionResourceTest {
                 .statusCode(200);
     }
 
-    /*
-    // Temporarily commented out for debugging
     @Test
+    @Order(2)
     void shouldRejectInvalidTransactionData() {
         given()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -74,6 +73,7 @@ class TransactionResourceTest {
     }
 
     @Test
+    @Order(3)
     void shouldGetTransactionById() {
         // First create a transaction
         String transactionId = given()
@@ -108,6 +108,7 @@ class TransactionResourceTest {
     }
 
     @Test
+    @Order(4)
     void shouldReturn404ForNonExistentTransaction() {
         given()
                 .when()
@@ -117,7 +118,18 @@ class TransactionResourceTest {
     }
 
     @Test
+    @Order(5)
     void shouldListTransactions() {
+        // Since we use shared in-memory repository, we'll have previous transactions
+        // Get current transaction count first
+        int currentCount = given()
+                .when()
+                .get("/api/v1/transactions")
+                .then()
+                .statusCode(200)
+                .extract()
+                .path("total");
+
         // Create some transactions first
         for (int i = 0; i < 3; i++) {
             given()
@@ -136,21 +148,30 @@ class TransactionResourceTest {
                     .statusCode(201);
         }
 
-        // List transactions
+        // List transactions - expect current count + 3 new ones
         given()
                 .when()
                 .get("/api/v1/transactions")
                 .then()
                 .statusCode(200)
-                .body("transactions", hasSize(3))
-                .body("total", equalTo(3))
+                .body("total", equalTo(currentCount + 3))
                 .body("offset", equalTo(0))
                 .body("limit", equalTo(20))
                 .body("hasNext", equalTo(false));
     }
 
     @Test
+    @Order(6)
     void shouldSupportPagination() {
+        // Get current transaction count
+        int currentCount = given()
+                .when()
+                .get("/api/v1/transactions")
+                .then()
+                .statusCode(200)
+                .extract()
+                .path("total");
+
         // Create multiple transactions
         for (int i = 0; i < 5; i++) {
             given()
@@ -169,7 +190,7 @@ class TransactionResourceTest {
                     .statusCode(201);
         }
 
-        // Test pagination
+        // Test pagination - expect current count + 5 new transactions
         given()
                 .queryParam("offset", 0)
                 .queryParam("limit", 2)
@@ -178,10 +199,9 @@ class TransactionResourceTest {
                 .then()
                 .statusCode(200)
                 .body("transactions", hasSize(2))
-                .body("total", equalTo(5))
+                .body("total", equalTo(currentCount + 5))
                 .body("offset", equalTo(0))
                 .body("limit", equalTo(2))
                 .body("hasNext", equalTo(true));
     }
-    */
 }
