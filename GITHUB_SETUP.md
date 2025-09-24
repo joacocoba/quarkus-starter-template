@@ -48,7 +48,7 @@ git push origin v1.0.0
 - Production-ready structure with proper package organization
 
 ### 🔧 Technical Stack
-- **Quarkus 3.15.1** with Java 21
+- **Quarkus 3.20.0** with Java 21
 - **Maven** with wrapper for consistent builds
 - **JAX-RS** for REST API with Jackson JSON support
 - **Bean Validation** with comprehensive validation

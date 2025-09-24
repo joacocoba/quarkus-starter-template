@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- ⬆️ **Upgraded Quarkus to 3.20.0**
+  - Updated `quarkus.platform.version` from 3.15.1 to 3.20.0
+  - Replaced deprecated `quarkus-resteasy-reactive` with `quarkus-rest`
+  - Replaced deprecated `quarkus-resteasy-reactive-jackson` with `quarkus-rest-jackson`
+  - All tests passing, application functionality verified
+
+## [1.0.0] - 2025-09-24log
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## [1.0.0] - 2024-09-24
 
 ### 🎉 Initial Release - Quarkus Starter Template
