@@ -81,12 +81,6 @@
             <artifactId>quarkus-smallrye-health</artifactId>
         </dependency>
 
-        <!-- Metrics -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-micrometer</artifactId>
-        </dependency>
-
         <!-- Future Oracle Database Support (commented for now) -->
         <!--
         <dependency>

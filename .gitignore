@@ -2,9 +2,13 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
-# IDE files
+# IDE files - Keep shared configurations, ignore personal settings
 .idea/
+!.idea/codeStyles.xml
+!.idea/inspectionProfiles.xml
 .vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
 .settings/
 .project
 .classpath

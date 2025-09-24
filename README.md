@@ -1,374 +1,535 @@
-# Tra# Quarkus Starter Template
+# 🏦 Servicio de Transacciones - Plantilla Quarkus
 
-A production-ready Quarkus starter template implementing Hexagonal Architecture (Ports & Adapters) pattern with a complete transaction management example. This template demonstrates best practices for building enterprise-grade microservices.
+[![Quarkus](https://img.shields.io/badge/Quarkus-3.15.1-blue.svg)](https://quarkus.io/)
+[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://openjdk.java.net/)
+[![Maven](https://img.shields.io/badge/Maven-3.9+-green.svg)](https://maven.apache.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## 🚀 Quick Start
+Una plantilla de microservicio lista para producción construida con **Quarkus** y **Java 21**, implementando **Arquitectura Hexagonal** para el manejo de transacciones financieras.
 
-```bash
-# Clone this template
-git clone <your-repo-url>
-cd quarkus-starter-template
+## 📋 Tabla de Contenidos
 
-# Build the application
-./mvnw clean compile
+- [🚀 Características](#-características)
+- [🏗️ Arquitectura](#️-arquitectura)
+- [⚡ Inicio Rápido](#-inicio-rápido)
+- [🛠️ Configuración del Entorno](#️-configuración-del-entorno)
+- [📊 API Endpoints](#-api-endpoints)
+- [🧪 Pruebas](#-pruebas)
+- [📝 Scripts Disponibles](#-scripts-disponibles)
+- [🔧 Git Hooks](#-git-hooks)
+- [🌐 Configuración de GitHub](#-configuración-de-github)
+- [📚 Documentación](#-documentación)
+- [🐳 Docker](#-docker)
+- [🔍 Monitoreo](#-monitoreo)
 
-# Run tests
-./mvnw test
+## 🚀 Características
 
-# Start development mode
-./mvnw quarkus:dev
-```
+### 🏗️ Arquitectura y Diseño
+- **Arquitectura Hexagonal** (Puertos y Adaptadores)
+- **Separación limpia de responsabilidades** (Dominio, Aplicación, Infraestructura)
+- **Inyección de dependencias** con CDI
+- **Patrón Repository** para acceso a datos
+- **Manejo centralizado de errores**
 
-Access the application at:
-- **API Base**: http://localhost:8081/api/v1/transactions
-- **Swagger UI**: http://localhost:8081/q/swagger-ui
-- **Health Check**: http://localhost:8081/q/health
+### 🔧 Stack Tecnológico
+- **Quarkus 3.15.1** - Framework reactivo supersónico
+- **Java 21** - Última versión LTS con características modernas
+- **JAX-RS** - API REST con soporte JSON (Jackson)
+- **Bean Validation** - Validación comprehensiva de datos
+- **OpenAPI/Swagger** - Documentación automática de API
+- **Health Checks & Metrics** - Monitoreo y observabilidad
 
-## 📋 What's Included
+### 📊 Calidad de Código
+- **Spotless** - Formateo consistente de código
+- **Checkstyle** - Estilo de código (Google Style Guide)
+- **Maven Enforcer** - Gestión de dependencias
+- **JUnit 5 + Mockito + AssertJ** - Suite completa de pruebas
 
-✅ **Modern Technology Stack**
-- Quarkus 3.20.0 with Java 21
-- Maven wrapper for consistent builds
-- Production-ready configuration
+### 🎯 Funcionalidades del Negocio
+- **Gestión de transacciones** entre cuentas
+- **Validación de números de cuenta**
+- **Soporte multicurrency**
+- **API RESTful** con versionado (`/api/v1`)
+- **Repositorio en memoria** (fácil migración a base de datos)
 
-✅ **Hexagonal Architecture**
-- Clean separation of concerns
-- Domain-driven design principles
-- Testable and maintainable code structure
-
-✅ **Complete Transaction API**
-- Create, read, and list transactions
-- Account number tracking (origin/destination)
-- Comprehensive validation
-- RESTful endpoints with proper HTTP codes
-
-✅ **Enterprise Features**
-- OpenAPI/Swagger documentation
-- Health checks and readiness probes
-- Metrics and observability
-- CORS configuration
-- Comprehensive error handling
-
-✅ **Quality Gates**
-- Code formatting (Spotless + Google Java Format)
-- Static analysis (Checkstyle)
-- Dependency management (Maven Enforcer)
-- Unit testing with high coverage
-
-✅ **Developer Experience**
-- Hot reload in development
-- Comprehensive test utilities
-- Docker support
-- Helpful scripts for testing
-
-## 🎯 API Examples
-
-### Create Transaction
-```bash
-curl -X POST http://localhost:8081/api/v1/transactions 
-  -H "Content-Type: application/json" 
-  -d '{
-    "amount": 150.75,
-    "currency": "USD",
-    "originAccountNumber": "ACC-123456789",
-    "destinationAccountNumber": "ACC-987654321"
-  }'
-```
-
-### Get Transaction
-```bash
-curl http://localhost:8081/api/v1/transactions/{transaction-id}
-```
-
-### List Transactions
-```bash
-curl "http://localhost:8081/api/v1/transactions?offset=0&limit=20"
-```
-
-## 🏗️ Architecture
+## 🏗️ Arquitectura
 
 ```
 src/main/java/com/example/transactions/
-├── domain/                     # 🎯 Core business logic
-│   ├── model/                 #    Domain entities & value objects
-│   └── ports/                 #    Interfaces for external dependencies
-├── application/               # 🔄 Use cases & orchestration
-│   ├── dto/                  #    Application data transfer objects
-│   └── usecases/             #    Business use cases
-├── infrastructure/           # 🔌 External adapters
-│   ├── repositories/         #    Data persistence implementations
-│   └── services/            #    External service integrations
-├── presentation/            # 🌐 API layer
-│   ├── dto/                 #    Request/response DTOs
-│   └── rest/                #    REST controllers
-└── shared/                  # 🛠️ Cross-cutting concerns
-    └── constants/           #    Application constants
+├── 📁 application/           # Capa de Aplicación
+│   ├── mappers/             # Mapeo entre capas
+│   ├── services/            # Lógica de aplicación
+│   └── usecases/            # Casos de uso del negocio
+├── 📁 domain/               # Capa de Dominio
+│   ├── entities/            # Entidades del dominio
+│   ├── exceptions/          # Excepciones del negocio
+│   ├── ports/               # Puertos (interfaces)
+│   └── valueobjects/        # Objetos de valor
+└── 📁 infrastructure/       # Capa de Infraestructura
+    ├── adapters/            # Adaptadores REST
+    ├── config/              # Configuraciones
+    └── repositories/        # Implementaciones de repositorios
 ```
 
-## 🧪 Testing
+### Principios Arquitectónicos
+- **Inversión de Dependencias**: Las capas externas dependen de las internas
+- **Separación de Responsabilidades**: Cada capa tiene una responsabilidad clara
+- **Testabilidad**: Arquitectura que facilita las pruebas unitarias
+- **Flexibilidad**: Fácil intercambio de implementaciones
 
-The template includes comprehensive testing utilities:
+## ⚡ Inicio Rápido
+
+### Prerrequisitos
+- **Java 21+** (recomendado: Temurin u OpenJDK)
+- **Maven 3.9+** (incluido Maven Wrapper)
+- **Git** para control de versiones
+
+### 🌐 Configuración de Puertos (CENTRALIZADA)
+
+El proyecto utiliza una configuración centralizada de puertos que se puede controlar mediante variables de entorno:
 
 ```bash
-# Run all tests
+# Puerto por defecto (todos los perfiles): 8080
+# Cambiar puerto para desarrollo:
+export DEV_PORT=8080
+./mvnw quarkus:dev
+
+# Cambiar puerto para producción:
+export PORT=9090
+java -jar target/quarkus-app/quarkus-run.jar
+
+# Cambiar puerto para tests (normalmente automático = 0):
+export TEST_PORT=8082
 ./mvnw test
-
-# Run with coverage
-./mvnw test jacoco:report
-
-# Test the running application
-./scripts/test-api.sh
-
-# Test application startup
-./scripts/test-start.sh
 ```
 
-## 🔧 Customization
+### Configuración por Perfil
+- **Desarrollo** (`%dev`): Puerto `${DEV_PORT:8080}` (default: 8080)
+- **Producción** (`%prod`): Puerto `${PORT:8080}` (default: 8080)
+- **Test** (`%test`): Puerto `${TEST_PORT:0}` (default: random)
 
-### 1. Change Package Structure
-Update package names from `com.example.transactions` to your domain:
-- Update all Java files
-- Update `pom.xml` group and artifact IDs
-- Update application properties
-
-### 2. Adapt Domain Model
-Replace the `Transaction` entity with your business domain:
-- Modify `Transaction.java` in the domain layer
-- Update corresponding DTOs and use cases
-- Adjust validation rules
-
-### 3. Add Database Integration
-The template uses in-memory storage. To add database support:
-- Uncomment database dependencies in `pom.xml`
-- Implement repository adapters with JPA
-- Add database configuration
-
-### 4. Security Integration
-Add authentication and authorization:
-- Include Quarkus Security extensions
-- Configure JWT or OAuth2
-- Add security annotations to endpoints
-
-## 🐳 Docker Support
+### Instalación Automática
 
 ```bash
-# Build native image
-./mvnw clean package -Dnative
+# 1. Clonar el repositorio
+git clone https://github.com/joacocoba/transactions-service.git
+cd transactions-service
 
-# Build Docker image
-docker build -t quarkus-starter-template .
+# 2. Configurar entorno de desarrollo (instala Java 21 si es necesario)
+./scripts/setup-dev.sh
 
-# Run container
-docker run -p 8081:8081 quarkus-starter-template
+# 3. Ejecutar la aplicación (puerto 8080 por defecto)
+./mvnw quarkus:dev
 ```
 
-## 📊 Quality Metrics
-
-The template enforces high code quality:
-- **Code formatting**: Automatically applied via Spotless
-- **Style checks**: Google Java Style via Checkstyle
-- **Dependency management**: Strict version control
-- **Test coverage**: Comprehensive unit and integration tests
-
-## 🚀 Production Readiness
-
-This template is designed for production use:
-- **Health checks**: Readiness and liveness probes
-- **Metrics**: Application and JVM metrics
-- **Observability**: Structured logging and tracing ready
-- **Security**: CORS configured, validation in place
-- **Performance**: Optimized for Quarkus native compilation
-
-## 📚 Next Steps
-
-1. **Customize the domain**: Replace transaction logic with your business needs
-2. **Add persistence**: Implement database integration
-3. **Enhance security**: Add authentication and authorization
-4. **Monitoring**: Set up logging, metrics, and alerting
-5. **CI/CD**: Configure automated testing and deployment
-
-## 🤝 Contributing
-
-1. Fork this template
-2. Create your feature branch
-3. Ensure all quality gates pass: `./mvnw verify`
-4. Submit a pull request
-
-## 📄 License
-
-This template is provided as-is for educational and commercial use.
-
----
-
-**Happy coding! 🎉**
-
-This template gives you a solid foundation to build robust, scalable microservices with Quarkus and clean architecture principles.ce
-
-A production### API Endpoints
+### Verificación de la Instalación
 
 ```bash
-# Create a transaction
-curl -X POST http://localhost:8081/api/v1/transactions \
+# Verificar que el servicio está funcionando
+curl http://localhost:8080/q/health/ready
+
+# Probar el API
+curl -X POST http://localhost:8080/api/v1/transactions \
+  -H "Content-Type: application/json" \
+  -d '{"amount": 100.50, "currency": "USD", "originAccountNumber": "ACC-12345", "destinationAccountNumber": "ACC-67890"}'
+```
+
+## 🛠️ Configuración del Entorno
+
+### Usando SDKMAN (Recomendado)
+
+```bash
+# Instalar SDKMAN
+curl -s "https://get.sdkman.io" | bash
+source ~/.sdkman/bin/sdkman-init.sh
+
+# Instalar Java 21
+sdk install java 21.0.4-tem
+sdk use java 21.0.4-tem
+
+# Verificar instalación
+java -version
+```
+
+### Configuración Manual
+
+1. **Descargar Java 21** desde [Adoptium](https://adoptium.net/)
+2. **Configurar JAVA_HOME** en tu sistema
+3. **Verificar Maven** viene incluido (Maven Wrapper)
+
+### Variables de Entorno
+
+```bash
+export JAVA_HOME=/path/to/java21
+export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
+```
+
+## 📊 API Endpoints
+
+### Transacciones
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| `POST` | `/api/v1/transactions` | Crear nueva transacción |
+| `GET` | `/api/v1/transactions/{id}` | Obtener transacción por ID |
+| `GET` | `/api/v1/transactions` | Listar todas las transacciones |
+
+### Monitoreo y Salud
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| `GET` | `/q/health/ready` | Verificar si el servicio está listo |
+| `GET` | `/q/health/live` | Verificar si el servicio está vivo |
+| `GET` | `/q/metrics` | Métricas de la aplicación |
+| `GET` | `/q/swagger-ui` | Documentación interactiva de la API |
+
+### Ejemplo de Uso
+
+```bash
+# Crear transacción
+curl -X POST http://localhost:8080/api/v1/transactions \
   -H "Content-Type: application/json" \
   -d '{
-    "amount": 100.50,
-    "currency": "USD",
-    "originAccountNumber": "ACC-12345678",
-    "destinationAccountNumber": "ACC-87654321"
+    "amount": 250.75,
+    "currency": "USD", 
+    "originAccountNumber": "ACC-123456",
+    "destinationAccountNumber": "ACC-789012"
   }'
 
-# Get a transaction by ID
-curl http://localhost:8081/api/v1/transactions/{id}
+# Respuesta esperada
+{
+  "id": "uuid-generated",
+  "amount": 250.75,
+  "currency": "USD",
+  "originAccountNumber": "ACC-123456",
+  "destinationAccountNumber": "ACC-789012",
+  "status": "COMPLETED",
+  "timestamp": "2025-09-24T10:30:00Z"
+}
+```
 
-# List all transactions with pagination
-curl "http://localhost:8081/api/v1/transactions?offset=0&limit=10"
-```15.1 microservice demonstrating Hexagonal Architecture (Ports & Adapters) pattern for transaction management.
+## 🧪 Pruebas
 
-## 🚀 Quick Start
+### Ejecutar Todas las Pruebas
 
-The template is now **ready to use**! The CDI ambiguous dependency issue has been resolved.
-
-### Build & Test
 ```bash
-# Build the application
-./mvnw clean compile
-
-# Run unit tests
+# Pruebas unitarias
 ./mvnw test
 
-# Run all quality checks
+# Pruebas de integración  
 ./mvnw verify
 
-# Start development mode
-./mvnw quarkus:dev
+# Pruebas con reporte de cobertura
+./mvnw test jacoco:report
 ```
 
-### ⚠️ CDI Configuration Fix Applied
+### Tipos de Pruebas
 
-**Issue**: The template initially had both `InMemoryTransactionRepositoryAdapter` and `OracleTransactionRepositoryAdapter` as CDI beans, causing ambiguous dependency injection.
+- **Unitarias**: Pruebas de lógica de dominio y aplicación
+- **Integración**: Pruebas de API endpoints
+- **Contratos**: Validación de esquemas JSON
+- **Arquitectura**: Verificación de principios arquitectónicos
 
-**Solution**: The `OracleTransactionRepositoryAdapter` has been disabled (commented out `@ApplicationScoped`) as it's a placeholder implementation. This allows the `InMemoryTransactionRepositoryAdapter` to work properly for development and testing.
-
-### Access Points
-
-- **Application**: http://localhost:8081 (dev mode)
-- **Health Check**: http://localhost:8081/q/health
-- **OpenAPI/Swagger**: http://localhost:8081/q/swagger-ui
-- **Metrics**: http://localhost:8081/q/metrics
-
-### API Endpoints
+### Ejecutar Pruebas Específicas
 
 ```bash
-# Create a transaction
-curl -X POST http://localhost:8081/api/v1/transactions 
-  -H "Content-Type: application/json" 
-  -d '{
-    "amount": 100.50,
-    "description": "Test transaction"
-  }'
+# Solo pruebas de dominio
+./mvnw test -Dtest="*DomainTest"
 
-# Get a transaction by ID
-curl http://localhost:8081/api/v1/transactions/{id}
+# Solo pruebas de API
+./mvnw test -Dtest="*RestTest"
 
-# List all transactions with pagination
-curl "http://localhost:8081/api/v1/transactions?page=0&size=10"
+# Prueba específica
+./mvnw test -Dtest="TransactionServiceTest#shouldCreateTransaction"
 ```
 
-## 📋 Features Implemented
+## 📝 Scripts Disponibles
 
-✅ **Complete Hexagonal Architecture**
-- Domain models with business logic encapsulation
-- Ports (interfaces) for external dependencies
-- Adapters for infrastructure concerns
-- Use cases for application logic
+Todos los scripts están ubicados en el directorio `scripts/` y están completamente documentados:
 
-✅ **Production-Ready Configuration**  
-- Quarkus 3.20.0 with Java 21
-- Quality gates: Spotless + Checkstyle + Enforcer
-- Health checks and metrics
-- OpenAPI documentation
-- CORS configuration
+### `setup-dev.sh`
+```bash
+./scripts/setup-dev.sh
+```
+- 🔧 **Configuración automática del entorno de desarrollo**
+- ☕ **Detección e instalación de Java 21 via SDKMAN**
+- 📦 **Verificación de dependencias**
+- 🎯 **Compilación y validación inicial del proyecto**
 
-✅ **Repository Pattern**
-- In-memory repository (active for dev/test)
-- Oracle repository placeholder (disabled)
-- Configurable via `app.repository.type` property
+### `test-api.sh`
+```bash
+./scripts/test-api.sh
+```
+- 🧪 **Pruebas automatizadas de la API**
+- 🔍 **Verificación de endpoints principales**
+- 📊 **Health checks y validación de respuestas**
+- 🎯 **Casos de prueba de transacciones**
 
-✅ **Docker Support**
-- Multi-stage Dockerfile with Red Hat UBI 9
-- Non-root user for security
-- Health checks and proper signals
+### `java-env.sh`
+```bash
+source ./scripts/java-env.sh
+```
+- 🌐 **Gestión del entorno Java**
+- 📋 **Configuración automática desde .sdkmanrc**
+- ✅ **Verificación de versiones**
+- 🔧 **Activación de herramientas de desarrollo**
 
-✅ **Testing Infrastructure**
-- Unit tests with JUnit 5
-- REST Assured for API testing
-- AssertJ for fluent assertions
+### `git-hooks.sh`
+```bash
+./scripts/git-hooks.sh [comando]
+```
+- 🎣 **Gestión completa de Git hooks**
+- Ver sección [Git Hooks](#-git-hooks) para detalles
 
-## 🏗️ Architecture
+## 🔧 Git Hooks
+
+El proyecto incluye un sistema completo de Git hooks para mantener la calidad del código:
+
+### Comandos Disponibles
+
+```bash
+# Verificar estado del hook
+./scripts/git-hooks.sh status
+
+# Probar el hook manualmente  
+./scripts/git-hooks.sh test
+
+# Deshabilitar temporalmente
+./scripts/git-hooks.sh disable
+
+# Rehabilitar 
+./scripts/git-hooks.sh enable
+
+# Ver ayuda completa
+./scripts/git-hooks.sh
+```
+
+### ¿Qué hace el Pre-commit Hook?
+
+El hook de pre-commit ejecuta automáticamente antes de cada commit:
+
+1. **✅ Verificación de Compilación**
+   ```bash
+   ./mvnw compile -q -DskipTests
+   ```
+
+2. **🧪 Ejecución de Pruebas**
+   ```bash
+   ./mvnw test -q
+   ```
+
+3. **🎨 Validación de Formato de Código**
+   ```bash
+   ./mvnw spotless:check -q
+   ```
+
+4. **🔍 Detección de Problemas Comunes**
+   - TODOs sin resolver
+   - Declaraciones de debug (System.out, printStackTrace)
+   - Archivos grandes (>1MB)
+   - Archivos binarios no deseados
+
+### Configuración del Hook
+
+El hook se instala automáticamente cuando ejecutas `setup-dev.sh`. Para instalarlo manualmente:
+
+```bash
+# El hook ya existe en .git/hooks/pre-commit
+# Solo necesitas verificar que esté activo
+./scripts/git-hooks.sh status
+```
+
+### Bypass Temporal (Solo en Emergencias)
+
+```bash
+# Commit omitiendo el hook (NO recomendado)
+git commit --no-verify -m "Mensaje de commit"
+
+# Mejor opción: deshabilitar temporalmente
+./scripts/git-hooks.sh disable
+git commit -m "Mensaje de commit"
+./scripts/git-hooks.sh enable
+```
+
+## 🌐 Configuración de GitHub
+
+El proyecto incluye configuración completa para GitHub. Ver detalles en `GITHUB_SETUP.md` traducido al español:
+
+### Pasos Rápidos para GitHub
+
+1. **Crear Repositorio en GitHub**
+   - Nombre: `transactions-service` o como prefieras
+   - **NO** inicializar con README (ya tenemos uno)
+
+2. **Agregar Remote y Push**
+   ```bash
+   git remote add origin https://github.com/tu-usuario/transactions-service.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+3. **Crear Release (Opcional)**
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+
+### Características para GitHub
+
+- ✅ **README completo** con badges y documentación
+- ✅ **Issues templates** para bugs y features
+- ✅ **Pull Request template** 
+- ✅ **GitHub Actions** preparado (CI/CD)
+- ✅ **Dependabot** configurado
+- ✅ **Security** políticas incluidas
+
+Ver `GITHUB_SETUP.md` para la guía completa en español.
+
+## 📚 Documentación
+
+### Documentación de la API
+- **Swagger UI**: http://localhost:8080/q/swagger-ui/
+- **OpenAPI JSON**: http://localhost:8080/q/openapi
+
+### Estructura de Documentación
 
 ```
-src/main/java/com/example/transactions/
-├── domain/                     # Core business logic
-│   ├── model/                 # Domain entities
-│   └── ports/                 # Interfaces (repository, services)
-├── application/               # Use cases & orchestration  
-│   ├── dto/                  # Data transfer objects
-│   └── usecases/             # Application services
-├── infrastructure/           # External adapters
-│   ├── repositories/         # Data persistence
-│   └── services/            # External services
-├── presentation/            # REST controllers
-│   └── rest/
-└── shared/                 # Cross-cutting concerns
-    └── pagination/
+📚 Documentación
+├── README.md              # Este archivo - Guía principal
+├── scripts/README.md      # Documentación de scripts
+├── GITHUB_SETUP.md       # Guía de configuración GitHub
+├── docs/                 # Documentación adicional
+│   ├── architecture.md   # Decisiones arquitectónicas
+│   ├── deployment.md     # Guía de despliegue
+│   └── troubleshooting.md # Solución de problemas
+└── API Documentation     # Swagger/OpenAPI automático
 ```
 
-## 🔧 Configuration
+### Generar Documentación
 
-### Repository Selection
-The application uses the in-memory repository by default. To switch to Oracle (when implemented):
+```bash
+# Generar documentación de API
+./mvnw compile
 
-```properties
-app.repository.type=oracle  # Change to 'oracle' when ready
+# La documentación estará disponible en:
+# http://localhost:8080/q/swagger-ui/
 ```
 
-### Enabling Oracle Repository
-When ready to implement Oracle persistence:
+## 🐳 Docker
 
-1. Uncomment the `@ApplicationScoped` annotation in `OracleTransactionRepositoryAdapter.java`
-2. Set `app.repository.type=oracle` in application properties
-3. Add Oracle dependencies in `pom.xml`
-4. Implement the actual database operations
+### Construcción de Imagen
 
-## 🧪 Quality Gates
+```bash
+# Imagen nativa (más rápida, menor tamaño)
+./mvnw package -Pnative -Dquarkus.native.container-build=true
+docker build -f src/main/docker/Dockerfile.native -t transactions-service:native .
 
-The project includes strict quality enforcement:
+# Imagen JVM (más rápida de construir)
+./mvnw package
+docker build -f src/main/docker/Dockerfile.jvm -t transactions-service:jvm .
+```
 
-- **Code formatting**: Google Java Format via Spotless
-- **Code style**: Checkstyle with Google rules
-- **Dependency management**: Maven Enforcer with Java 21 requirements
-- **Testing**: Minimum test coverage expectations
+### Ejecutar con Docker
 
-## 🔍 Troubleshooting
+```bash
+# Imagen nativa
+docker run -i --rm -p 8080:8080 transactions-service:native
 
-### Common Issues
+# Imagen JVM  
+docker run -i --rm -p 8080:8080 transactions-service:jvm
+```
 
-**Port 8080 in use**: The dev configuration uses port 8081 to avoid conflicts.
+### Docker Compose (Desarrollo)
 
-**CDI Ambiguous Dependencies**: This has been resolved by disabling the Oracle adapter placeholder.
+```yaml
+version: '3.8'
+services:
+  transactions-service:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - QUARKUS_PROFILE=dev
+```
 
-**Quality checks failing**: Run `./mvnw spotless:apply` to auto-format code.
+## 🔍 Monitoreo
 
-## 📚 Next Steps
+### Health Checks
 
-1. **Database Integration**: Implement the Oracle adapter with JPA entities
-2. **Security**: Add authentication and authorization
-3. **Observability**: Enhance logging and distributed tracing
-4. **CI/CD**: Set up GitHub Actions or similar pipeline
-5. **Performance**: Add caching and optimize queries
+```bash
+# Verificar que el servicio está listo para recibir tráfico
+curl http://localhost:8080/q/health/ready
+
+# Verificar que el servicio está funcionando
+curl http://localhost:8080/q/health/live
+```
+
+### Métricas
+
+```bash
+# Métricas de la aplicación (formato Prometheus)
+curl http://localhost:8080/q/metrics
+
+# Métricas específicas de la aplicación
+curl http://localhost:8080/q/metrics/application
+```
+
+### Logs
+
+```bash
+# Logs en modo desarrollo (más verbosos)
+./mvnw quarkus:dev
+
+# Logs en producción (configurables via application.properties)
+java -jar target/quarkus-app/quarkus-run.jar
+```
+
+## 🚀 Modo de Desarrollo
+
+```bash
+# Iniciar en modo desarrollo (hot reload)
+./mvnw quarkus:dev
+
+# El servicio estará disponible en:
+# - API: http://localhost:8080
+# - Swagger UI: http://localhost:8080/q/swagger-ui/
+# - Health: http://localhost:8080/q/health
+```
+
+### Características del Modo Dev
+- **Hot Reload**: Cambios automáticos sin reiniciar
+- **Dev UI**: Interfaz de desarrollo en http://localhost:8080/q/dev/
+- **Test Continuous**: Pruebas automáticas en background
+- **Live Coding**: Desarrollo en tiempo real
+
+## 🤝 Contribución
+
+1. **Fork** el repositorio
+2. **Crear rama** para tu feature (`git checkout -b feature/nueva-caracteristica`)
+3. **Commit** tus cambios (`git commit -m 'feat: agregar nueva característica'`)
+4. **Push** a la rama (`git push origin feature/nueva-caracteristica`)
+5. **Crear Pull Request**
+
+### Estándares de Código
+- **Seguir Google Java Style Guide**
+- **Usar Conventional Commits** para mensajes
+- **Escribir pruebas** para nuevo código
+- **Mantener cobertura** > 80%
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
+
+## 👥 Autores
+
+- **Tu Nombre** - *Trabajo inicial* - [@tu-usuario](https://github.com/tu-usuario)
+
+## 🙏 Agradecimientos
+
+- **Quarkus Team** por el excelente framework
+- **Red Hat** por el ecosistema de herramientas
+- **Comunidad Java** por las mejores prácticas
 
 ---
 
-**Status**: ✅ **Ready for Development**
-
-The template is fully functional with the CDI issue resolved. You can now run `./mvnw quarkus:dev` and start developing your transaction service!
+⭐ **¡Si te gustó este proyecto, dale una estrella!** ⭐

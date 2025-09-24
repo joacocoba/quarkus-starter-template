@@ -1,83 +1,83 @@
-# 🔧 Git Hooks Configuration
+# 🔧 Configuración de Git Hooks
 
-This project includes a pre-commit hook that ensures code quality before commits.
+Este proyecto incluye un hook de pre-commit que asegura la calidad del código antes de los commits.
 
-## What the Pre-commit Hook Does
+## Qué hace el Hook de Pre-commit
 
-The hook automatically runs these checks before every commit:
+El hook ejecuta automáticamente estas verificaciones antes de cada commit:
 
-1. **📦 Compilation Check**: Ensures code compiles (`./mvnw compile`)
-2. **🧪 Test Execution**: Runs all tests (`./mvnw test`)
-3. **🎨 Code Formatting**: Checks code style (`./mvnw spotless:check`)
-4. **📄 Code Quality**: Detects common issues:
-   - TODO/FIXME/XXX comments in staged files
-   - Debug statements (`System.out.println`, `printStackTrace`)
-   - Large files (>1MB)
+1. **📦 Verificación de Compilación**: Asegura que el código compile (`./mvnw compile`)
+2. **🧪 Ejecución de Pruebas**: Ejecuta todas las pruebas (`./mvnw test`)
+3. **🎨 Formato de Código**: Verifica el estilo del código (`./mvnw spotless:check`)
+4. **📄 Calidad de Código**: Detecta problemas comunes:
+   - Comentarios TODO/FIXME/XXX en archivos staged
+   - Declaraciones de debug (`System.out.println`, `printStackTrace`)
+   - Archivos grandes (>1MB)
 
-## How It Works
+## Cómo Funciona
 
-The hook is **automatically active** and will:
-- ✅ **Allow commit** if all checks pass
-- ❌ **Block commit** if critical issues are found (compilation/tests/formatting)
-- ⚠️ **Show warnings** for code quality issues but allow commit
+El hook está **automáticamente activo** y:
+- ✅ **Permite el commit** si todas las verificaciones pasan
+- ❌ **Bloquea el commit** si se encuentran problemas críticos (compilación/pruebas/formato)
+- ⚠️ **Muestra advertencias** por problemas de calidad pero permite el commit
 
-## Managing the Hook
+## Gestión del Hook
 
-Use the management script for hook control:
+Usa el script de gestión para controlar el hook:
 
 ```bash
-# Check hook status
+# Verificar estado del hook
 ./scripts/git-hooks.sh status
 
-# Test hook manually (without committing)
+# Probar hook manualmente (sin hacer commit)
 ./scripts/git-hooks.sh test
 
-# Temporarily disable hook
+# Deshabilitar hook temporalmente
 ./scripts/git-hooks.sh disable
 
-# Re-enable hook
+# Rehabilitar hook
 ./scripts/git-hooks.sh enable
 ```
 
-## Quick Fixes
+## Soluciones Rápidas
 
-If the pre-commit hook fails:
+Si el hook de pre-commit falla:
 
-### Compilation Issues
+### Problemas de Compilación
 ```bash
 ./mvnw compile
-# Fix any compiler errors shown
+# Corrige cualquier error de compilación mostrado
 ```
 
-### Test Failures
+### Fallas en las Pruebas
 ```bash
 ./mvnw test
-# Fix failing tests
+# Corrige las pruebas que fallen
 ```
 
-### Code Formatting Issues
+### Problemas de Formato de Código
 ```bash
-# Auto-fix formatting
+# Auto-corregir formato
 ./mvnw spotless:apply
 
-# Or check what needs fixing
+# O verificar qué necesita ser corregido
 ./mvnw spotless:check
 ```
 
-## Emergency Override
+## Override de Emergencia
 
-In rare cases where you need to bypass the hook:
+En casos raros donde necesites saltarte el hook:
 ```bash
-git commit --no-verify -m "emergency commit"
+git commit --no-verify -m "commit de emergencia"
 ```
 
-⚠️ **Use sparingly** - this skips all quality checks!
+⚠️ **Usar con moderación** - ¡esto omite todas las verificaciones de calidad!
 
-## Benefits
+## Beneficios
 
-- 🛡️ **Prevents broken code** from entering the repository
-- 🚀 **Maintains consistent code quality** across the team
-- 📈 **Reduces CI/CD failures** by catching issues early
-- 🎯 **Fast feedback loop** - catches issues in seconds, not minutes
+- 🛡️ **Previene código roto** de entrar al repositorio
+- 🚀 **Mantiene calidad consistente** del código en todo el equipo
+- 📈 **Reduce fallas en CI/CD** al detectar problemas temprano
+- 🎯 **Ciclo de retroalimentación rápido** - detecta problemas en segundos, no minutos
 
-The hook is designed to be **fast and practical** - most checks complete in under 10 seconds for typical commits.
+El hook está diseñado para ser **rápido y práctico** - la mayoría de verificaciones se completan en menos de 10 segundos para commits típicos.
