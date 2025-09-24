@@ -1,0 +1,61 @@
+# Build output
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE files
+.idea/
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+*.iml
+*.ipr
+*.iws
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Node modules (for frontend tooling if added later)
+node_modules/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# JVM crash logs
+hs_err_pid*
+
+# Application specific
+*.env
+.env
+.env.local
+
+# Quarkus
+.quarkus/
+
+# Test results
+TEST-*.xml
+/surefire-reports/
+
+# Coverage reports
+jacoco.exec
+.jacoco/

@@ -1,0 +1,83 @@
+transactions-service/
+├── .editorconfig
+├── .gitignore
+├── .dockerignore
+├── README.md
+├── pom.xml
+├── mvnw
+├── mvnw.cmd
+├── .mvn/
+│   └── wrapper/
+│       ├── maven-wrapper.jar
+│       └── maven-wrapper.properties
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── example/
+│   │   │           └── transactions/
+│   │   │               ├── domain/
+│   │   │               │   ├── model/
+│   │   │               │   │   ├── Transaction.java
+│   │   │               │   │   └── TransactionStatus.java
+│   │   │               │   └── ports/
+│   │   │               │       ├── TransactionRepositoryPort.java
+│   │   │               │       └── IdGeneratorPort.java
+│   │   │               ├── application/
+│   │   │               │   ├── usecases/
+│   │   │               │   │   ├── CreateTransactionUseCase.java
+│   │   │               │   │   ├── GetTransactionUseCase.java
+│   │   │               │   │   └── ListTransactionsUseCase.java
+│   │   │               │   └── dto/
+│   │   │               │       └── TransactionQuery.java
+│   │   │               ├── infrastructure/
+│   │   │               │   ├── repositories/
+│   │   │               │   │   ├── InMemoryTransactionRepositoryAdapter.java
+│   │   │               │   │   └── oracle/
+│   │   │               │   │       ├── OracleTransactionRepositoryAdapter.java
+│   │   │               │   │       └── README.md
+│   │   │               │   └── services/
+│   │   │               │       └── UuidGeneratorAdapter.java
+│   │   │               ├── presentation/
+│   │   │               │   ├── rest/
+│   │   │               │   │   ├── TransactionResource.java
+│   │   │               │   │   └── GlobalExceptionMapper.java
+│   │   │               │   └── dto/
+│   │   │               │       ├── CreateTransactionRequest.java
+│   │   │               │       ├── TransactionResponse.java
+│   │   │               │       └── TransactionListResponse.java
+│   │   │               └── shared/
+│   │   │                   ├── errors/
+│   │   │                   │   ├── DomainException.java
+│   │   │                   │   ├── TransactionNotFoundException.java
+│   │   │                   │   └── ValidationException.java
+│   │   │                   └── result/
+│   │   │                       └── Result.java
+│   │   └── resources/
+│   │       ├── application.properties
+│   │       ├── application-dev.properties
+│   │       └── logging.properties
+│   └── test/
+│       ├── java/
+│       │   └── com/
+│       │       └── example/
+│       │           └── transactions/
+│       │               ├── domain/
+│       │               │   └── model/
+│       │               │       └── TransactionTest.java
+│       │               ├── application/
+│       │               │   └── usecases/
+│       │               │       ├── CreateTransactionUseCaseTest.java
+│       │               │       ├── GetTransactionUseCaseTest.java
+│       │               │       └── ListTransactionsUseCaseTest.java
+│       │               └── presentation/
+│       │                   └── rest/
+│       │                       └── TransactionResourceTest.java
+│       └── resources/
+│           └── application-test.properties
+├── ops/
+│   └── Dockerfile.jvm
+└── docs/
+    ├── architecture.md
+    └── decision-records/
+        └── ADR-0001-template.md

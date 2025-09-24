@@ -1,0 +1,42 @@
+# Docker build context exclusions
+.git
+.gitignore
+README.md
+target/
+!target/quarkus-app/
+
+# IDE files
+.idea
+.vscode
+.settings
+.project
+.classpath
+*.iml
+*.ipr
+*.iws
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation
+docs/
+*.md
+
+# Test files
+src/test/
+**/test/
+
+# Maven wrapper jar is needed for build
+!.mvn/wrapper/maven-wrapper.jar
+
+# Development configs
+application-dev.properties
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp

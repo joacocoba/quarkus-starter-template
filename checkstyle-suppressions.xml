@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+    "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <!-- Suppress checks for generated code -->
+    <suppress checks=".*" files="target[/\\]generated-sources[/\\].*"/>
+    
+    <!-- Allow longer lines in test data -->
+    <suppress checks="LineLength" files=".*Test\.java"/>
+    
+    <!-- Allow magic numbers in tests -->
+    <suppress checks="MagicNumber" files=".*Test\.java"/>
+    
+    <!-- Allow multiple string literals in tests -->
+    <suppress checks="MultipleStringLiterals" files=".*Test\.java"/>
+    
+    <!-- Allow shorter method names in record constructors -->
+    <suppress checks="AbbreviationAsWordInName" files=".*\.java" lines="1-50"/>
+</suppressions>
