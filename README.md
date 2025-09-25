@@ -17,9 +17,7 @@ Una plantilla de microservicio lista para producción construida con **Quarkus**
 - [🧪 Pruebas](#-pruebas)
 - [📝 Scripts Disponibles](#-scripts-disponibles)
 - [🔧 Git Hooks](#-git-hooks)
-- [🌐 Configuración de GitHub](#-configuración-de-github)
 - [📚 Documentación](#-documentación)
-- [🎯 Reorganización por Entidades](#-reorganización-por-entidades)
 - [🐳 Docker](#-docker)
 - [🔍 Monitoreo](#-monitoreo)
 
@@ -70,7 +68,6 @@ src/main/java/com/example/transactions/
 │   │   └── policies/                 # TransactionValidationPolicy
 │   └── shared/                       # Componentes compartidos de aplicación
 │       ├── pagination/               # PageRequest, PageResponse
-│       ├── validation/               # Utilidades de validación
 │       └── exceptions/               # ValidationException
 ├── 📁 domain/                        # Capa de Dominio (por entidades)
 │   ├── transaction/                  # Dominio core de Transaction
@@ -79,13 +76,10 @@ src/main/java/com/example/transactions/
 │   │   └── exceptions/              # TransactionNotFoundException
 │   └── shared/                      # Dominio compartido
 │       ├── exceptions/              # DomainException (base)
-│       ├── ports/                   # IdGeneratorPort
-│       ├── events/                  # Domain Events (preparado)
-│       └── valueobjects/            # Value Objects compartidos (preparado)
+│       └── ports/                   # IdGeneratorPort
 ├── 📁 infrastructure/               # Capa de Infraestructura
 │   ├── repositories/               # Adaptadores de persistencia
-│   ├── services/                   # Servicios de infraestructura
-│   └── config/                     # Configuraciones
+│   └── services/                   # Servicios de infraestructura
 ├── 📁 presentation/                # Capa de Presentación
 │   ├── rest/                      # Controllers REST
 │   └── dto/                       # DTOs de presentación
@@ -93,23 +87,17 @@ src/main/java/com/example/transactions/
     └── GlobalExceptionMapper.java  # Manejo global de excepciones
 ```
 
-### ✨ Beneficios de la Nueva Arquitectura
+### ✨ Beneficios de la Arquitectura
 
 #### 🎯 **Organización por Entidades de Negocio**
 - **Mayor cohesión**: Todo lo relacionado con `Transaction` está junto
 - **Localización de cambios**: Modificaciones en Transaction se hacen en su propio espacio  
 - **Escalabilidad**: Fácil agregar nuevas entidades (`Account`, `Customer`, `Payment`)
-- **Teams isolation**: Diferentes equipos pueden trabajar en diferentes entidades
 
 #### 🚀 **Preparación para Microservicios**
 - **Bounded contexts claros**: Cada entidad es un contexto delimitado
 - **Extracción sencilla**: `domain/transaction/` + `application/transaction/` = microservicio independiente
 - **Shared kernel**: `domain/shared/` y `application/shared/` para código común
-
-#### 🔧 **Domain-Driven Design (DDD)**
-- **Ubiquitous Language**: Estructura refleja el lenguaje del negocio
-- **Domain First**: El dominio driving la arquitectura, no la tecnología
-- **Clean Architecture**: Dependencias apuntan hacia adentro
 
 ### Principios Arquitectónicos
 - **Entity-First Organization**: Organización por entidades de negocio vs capas técnicas
@@ -118,7 +106,6 @@ src/main/java/com/example/transactions/
 - **Inversión de Dependencias**: Las capas externas dependen de las internas
 - **Separación de Responsabilidades**: Cada capa y entidad tiene responsabilidad clara
 - **Testabilidad**: Arquitectura que facilita pruebas por entidad
-- **Future-Proof**: Preparada para evolución a microservicios
 
 ## ⚡ Inicio Rápido
 
@@ -151,17 +138,17 @@ export TEST_PORT=8082
 - **Producción** (`%prod`): Puerto `${PORT:8080}` (default: 8080)
 - **Test** (`%test`): Puerto `${TEST_PORT:0}` (default: random)
 
-### Instalación Automática
+### Instalación y Ejecución
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/joacocoba/transactions-service.git
-cd transactions-service
+git clone https://github.com/joacocoba/quarkus-starter-template.git
+cd quarkus-starter-template
 
-# 2. Configurar entorno de desarrollo (instala Java 21 si es necesario)
-./scripts/setup-dev.sh
+# 2. Configurar entorno (instala Java 21 si es necesario)
+./scripts/setup/setup-dev.sh
 
-# 3. Ejecutar la aplicación (puerto 8080 por defecto)
+# 3. Ejecutar en modo desarrollo
 ./mvnw quarkus:dev
 ```
 
@@ -394,40 +381,6 @@ git commit -m "Mensaje de commit"
 ./scripts/git-hooks.sh enable
 ```
 
-## 🌐 Configuración de GitHub
-
-El proyecto incluye configuración completa para GitHub. Ver detalles en `GITHUB_SETUP.md` traducido al español:
-
-### Pasos Rápidos para GitHub
-
-1. **Crear Repositorio en GitHub**
-   - Nombre: `transactions-service` o como prefieras
-   - **NO** inicializar con README (ya tenemos uno)
-
-2. **Agregar Remote y Push**
-   ```bash
-   git remote add origin https://github.com/tu-usuario/transactions-service.git
-   git branch -M main
-   git push -u origin main
-   ```
-
-3. **Crear Release (Opcional)**
-   ```bash
-   git tag v1.0.0
-   git push origin v1.0.0
-   ```
-
-### Características para GitHub
-
-- ✅ **README completo** con badges y documentación
-- ✅ **Issues templates** para bugs y features
-- ✅ **Pull Request template** 
-- ✅ **GitHub Actions** preparado (CI/CD)
-- ✅ **Dependabot** configurado
-- ✅ **Security** políticas incluidas
-
-Ver `GITHUB_SETUP.md` para la guía completa en español.
-
 ## 📚 Documentación
 
 ### Documentación de la API
@@ -440,11 +393,8 @@ Ver `GITHUB_SETUP.md` para la guía completa en español.
 📚 Documentación
 ├── README.md              # Este archivo - Guía principal
 ├── scripts/README.md      # Documentación de scripts
-├── GITHUB_SETUP.md       # Guía de configuración GitHub
 ├── docs/                 # Documentación adicional
-│   ├── architecture.md   # Decisiones arquitectónicas
-│   ├── deployment.md     # Guía de despliegue
-│   └── troubleshooting.md # Solución de problemas
+│   └── architecture.md   # Decisiones arquitectónicas
 └── API Documentation     # Swagger/OpenAPI automático
 ```
 
@@ -458,102 +408,36 @@ Ver `GITHUB_SETUP.md` para la guía completa en español.
 # http://localhost:8080/q/swagger-ui/
 ```
 
-## 🎯 Reorganización por Entidades
-
-### 📊 Transformación Arquitectónica Completada
-
-**Fecha**: Septiembre 2025  
-**Objetivo**: Migrar de arquitectura por capas técnicas a arquitectura DDD por entidades de negocio
-
-### ✅ Beneficios Obtenidos
-
-#### 🎯 **Mayor Cohesión**
-```
-✅ ANTES: Transaction disperso en 6+ directorios
-✅ DESPUÉS: Transaction centralizado en application/transaction/ y domain/transaction/
-```
-
-#### 🔍 **Localización de Cambios**
-```
-✅ ANTES: Cambio en Transaction requiere tocar múltiples capas
-✅ DESPUÉS: Cambios en Transaction localizados en sus propios directorios
-```
-
-#### 📦 **Preparación para Microservicios**
-```
-✅ ANTES: Difícil extraer funcionalidad específica
-✅ DESPUÉS: domain/transaction/ + application/transaction/ = microservicio listo
-```
-
-### 🚀 **Nueva Estructura de Entidades**
-
-#### Transaction Entity (Implementada)
-```
-application/transaction/     # Use Cases, DTOs, Policies
-domain/transaction/         # Models, Ports, Exceptions
-```
-
-#### Future Entities (Preparadas)
-```
-application/
-├── transaction/           # ✅ Completada
-├── account/              # 🔄 Lista para implementar
-├── customer/             # 🔄 Lista para implementar  
-└── payment/              # 🔄 Lista para implementar
-```
-
-### 📈 **Métricas de Mejora**
-
-| Aspecto | Antes | Después | Mejora |
-|---------|-------|---------|---------|
-| **Cohesión** | Baja | Alta | +85% |
-| **Localización** | Dispersa | Centralizada | +90% |
-| **Escalabilidad** | Limitada | Modular | +95% |
-| **Tests** | 22 ✅ | 22 ✅ | Funcionalidad preservada |
-
-### 📋 **Documentos de Referencia**
-
-- `docs/analysis-report.md` - Análisis técnico completo
-- `docs/refactoring-proposal.md` - Propuesta de refactoring DDD
-- `docs/reorganization-completion-report.md` - Reporte de completación
-
-**Nota**: Esta reorganización mantiene **100% de compatibilidad funcional** mientras mejora significativamente la estructura del código para desarrollo futuro.
-
 ## 🐳 Docker
 
 ### Construcción de Imagen
 
 ```bash
-# Imagen nativa (más rápida, menor tamaño)
-./mvnw package -Pnative -Dquarkus.native.container-build=true
-docker build -f src/main/docker/Dockerfile.native -t transactions-service:native .
-
-# Imagen JVM (más rápida de construir)
+# Construir la aplicación primero
 ./mvnw package
-docker build -f src/main/docker/Dockerfile.jvm -t transactions-service:jvm .
+
+# Construir imagen Docker
+docker build -t transactions-service .
 ```
 
 ### Ejecutar con Docker
 
 ```bash
-# Imagen nativa
-docker run -i --rm -p 8080:8080 transactions-service:native
+# Ejecutar el contenedor
+docker run -i --rm -p 8080:8080 transactions-service
 
-# Imagen JVM  
-docker run -i --rm -p 8080:8080 transactions-service:jvm
+# Verificar que funciona
+curl http://localhost:8080/q/health/ready
 ```
 
-### Docker Compose (Desarrollo)
+### Variables de Entorno
 
-```yaml
-version: '3.8'
-services:
-  transactions-service:
-    build: .
-    ports:
-      - "8080:8080"
-    environment:
-      - QUARKUS_PROFILE=dev
+```bash
+# Ejecutar con variables personalizadas
+docker run -i --rm -p 8080:8080 \
+  -e QUARKUS_PROFILE=prod \
+  -e PORT=8080 \
+  transactions-service
 ```
 
 ## 🔍 Monitoreo
@@ -626,7 +510,7 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 
 ## 👥 Autores
 
-- **Tu Nombre** - *Trabajo inicial* - [@tu-usuario](https://github.com/tu-usuario)
+- **BPD**
 
 ## 🙏 Agradecimientos
 
