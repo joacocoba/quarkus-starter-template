@@ -1,4 +1,4 @@
-package com.example.transactions.application.dto;
+package com.example.transactions.application.transaction.dto;
 
 /**
  * Query parameters for transaction listing operations.

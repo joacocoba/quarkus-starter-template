@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
-import com.example.transactions.domain.ports.IdGeneratorPort;
+import com.example.transactions.domain.shared.ports.IdGeneratorPort;
 
 /**
  * UUID-based implementation of IdGeneratorPort.

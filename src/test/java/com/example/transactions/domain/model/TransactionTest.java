@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
+import com.example.transactions.domain.transaction.model.Transaction;
+import com.example.transactions.domain.transaction.model.TransactionStatus;
+
 class TransactionTest {
 
   @Test

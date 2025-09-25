@@ -3,8 +3,8 @@ package com.example.transactions.infrastructure.repositories.oracle;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.transactions.domain.model.Transaction;
-import com.example.transactions.domain.ports.TransactionRepositoryPort;
+import com.example.transactions.domain.transaction.model.Transaction;
+import com.example.transactions.domain.transaction.ports.TransactionRepositoryPort;
 
 /**
  * Oracle database implementation of TransactionRepositoryPort.

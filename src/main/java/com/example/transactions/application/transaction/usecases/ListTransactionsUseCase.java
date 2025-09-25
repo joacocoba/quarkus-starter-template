@@ -1,13 +1,13 @@
-package com.example.transactions.application.usecases;
+package com.example.transactions.application.transaction.usecases;
 
 import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import com.example.transactions.application.dto.TransactionQuery;
-import com.example.transactions.domain.model.Transaction;
-import com.example.transactions.domain.ports.TransactionRepositoryPort;
+import com.example.transactions.application.transaction.dto.TransactionQuery;
+import com.example.transactions.domain.transaction.model.Transaction;
+import com.example.transactions.domain.transaction.ports.TransactionRepositoryPort;
 
 /**
  * Use case for listing transactions with pagination support.

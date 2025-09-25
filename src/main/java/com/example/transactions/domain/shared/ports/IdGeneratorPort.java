@@ -1,4 +1,4 @@
-package com.example.transactions.domain.ports;
+package com.example.transactions.domain.shared.ports;
 
 /**
  * Port (interface) for generating unique identifiers.

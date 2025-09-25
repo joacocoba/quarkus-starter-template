@@ -1,13 +1,13 @@
-package com.example.transactions.application.usecases;
+package com.example.transactions.application.transaction.usecases;
 
 import java.util.Optional;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import com.example.transactions.domain.model.Transaction;
-import com.example.transactions.domain.ports.TransactionRepositoryPort;
-import com.example.transactions.shared.errors.TransactionNotFoundException;
+import com.example.transactions.domain.transaction.exceptions.TransactionNotFoundException;
+import com.example.transactions.domain.transaction.model.Transaction;
+import com.example.transactions.domain.transaction.ports.TransactionRepositoryPort;
 
 /**
  * Use case for retrieving a transaction by its ID.

@@ -1,4 +1,4 @@
-package com.example.transactions.shared.errors;
+package com.example.transactions.domain.shared.exceptions;
 
 /**
  * Base class for all domain-specific exceptions.

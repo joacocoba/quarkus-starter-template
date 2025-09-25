@@ -1,9 +1,9 @@
-package com.example.transactions.domain.ports;
+package com.example.transactions.domain.transaction.ports;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.example.transactions.domain.model.Transaction;
+import com.example.transactions.domain.transaction.model.Transaction;
 
 /**
  * Port (interface) for transaction repository operations.

@@ -9,9 +9,9 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
-import com.example.transactions.shared.errors.DomainException;
-import com.example.transactions.shared.errors.TransactionNotFoundException;
-import com.example.transactions.shared.errors.ValidationException;
+import com.example.transactions.application.shared.exceptions.ValidationException;
+import com.example.transactions.domain.shared.exceptions.DomainException;
+import com.example.transactions.domain.transaction.exceptions.TransactionNotFoundException;
 
 /**
  * Manejador global de excepciones para el API REST del servicio de transacciones.

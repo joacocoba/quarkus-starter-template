@@ -1,4 +1,4 @@
-package com.example.transactions.application.usecases;
+package com.example.transactions.application.transaction.usecases;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -6,9 +6,9 @@ import java.time.LocalDateTime;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import com.example.transactions.domain.model.Transaction;
-import com.example.transactions.domain.ports.IdGeneratorPort;
-import com.example.transactions.domain.ports.TransactionRepositoryPort;
+import com.example.transactions.domain.shared.ports.IdGeneratorPort;
+import com.example.transactions.domain.transaction.model.Transaction;
+import com.example.transactions.domain.transaction.ports.TransactionRepositoryPort;
 
 /**
  * Use case for creating new transactions.

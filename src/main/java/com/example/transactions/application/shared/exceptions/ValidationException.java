@@ -1,4 +1,6 @@
-package com.example.transactions.shared.errors;
+package com.example.transactions.application.shared.exceptions;
+
+import com.example.transactions.domain.shared.exceptions.DomainException;
 
 /**
  * Exception thrown when validation fails.

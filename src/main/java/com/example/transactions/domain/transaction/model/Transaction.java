@@ -1,4 +1,4 @@
-package com.example.transactions.domain.model;
+package com.example.transactions.domain.transaction.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

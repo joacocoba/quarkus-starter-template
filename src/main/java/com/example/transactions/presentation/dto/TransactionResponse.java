@@ -3,8 +3,8 @@ package com.example.transactions.presentation.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.example.transactions.domain.model.Transaction;
-import com.example.transactions.domain.model.TransactionStatus;
+import com.example.transactions.domain.transaction.model.Transaction;
+import com.example.transactions.domain.transaction.model.TransactionStatus;
 
 /**
  * Response DTO for transaction data.

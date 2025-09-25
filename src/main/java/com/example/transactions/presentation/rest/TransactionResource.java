@@ -26,11 +26,11 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
-import com.example.transactions.application.dto.TransactionQuery;
-import com.example.transactions.application.usecases.CreateTransactionUseCase;
-import com.example.transactions.application.usecases.GetTransactionUseCase;
-import com.example.transactions.application.usecases.ListTransactionsUseCase;
-import com.example.transactions.domain.model.Transaction;
+import com.example.transactions.application.transaction.dto.TransactionQuery;
+import com.example.transactions.application.transaction.usecases.CreateTransactionUseCase;
+import com.example.transactions.application.transaction.usecases.GetTransactionUseCase;
+import com.example.transactions.application.transaction.usecases.ListTransactionsUseCase;
+import com.example.transactions.domain.transaction.model.Transaction;
 import com.example.transactions.presentation.dto.CreateTransactionRequest;
 import com.example.transactions.presentation.dto.TransactionListResponse;
 import com.example.transactions.presentation.dto.TransactionResponse;

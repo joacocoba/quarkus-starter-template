@@ -1,4 +1,4 @@
-package com.example.transactions.domain.model;
+package com.example.transactions.domain.transaction.model;
 
 /**
  * Enumeration representing the possible states of a transaction.
